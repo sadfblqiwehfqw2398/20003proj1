@@ -1,6 +1,6 @@
 //
 //  func.h
-//  2003proj1
+//  20003proj1
 //
 //  Created by Har on 26/8/17.
 //  Copyright © 2017 Hardaya Singh. All rights reserved.
@@ -10,5 +10,23 @@
 #define func_h
 
 #include <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
+
+
+struct node {
+    char character;
+    int weight;
+    int last_character;
+    struct node *left, *right, *equal;
+};
+
+void traverse(struct node* pNode, char* buffer, int depth, char* outputfile);
+void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix);
+struct node *newnode();
+struct node *insert(struct node* pNode, char* word, int weight);
 
 #endif /* func_h */
+
