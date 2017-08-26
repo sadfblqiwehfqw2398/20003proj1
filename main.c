@@ -11,7 +11,7 @@ int main(int argc, char * argv[]) {
     root = insert(root, "pet", 2);
     root = insert(root, "pe", 2);
     
-    char buffer[250]; int weight;
+    char buffer[CHAR_LIMIT]; int weight;
     FILE *f = fopen(argv[1],"r");
     assert(f != NULL);
     while (fscanf(f, "%d;%[^\n]", &weight, buffer) != EOF) {

@@ -7,7 +7,13 @@
 //
 
 #ifndef func_h
+
 #define func_h
+#define STRING_END '\0'
+#define TRUE 1
+#define FALSE 0
+#define UNAVAILABLE -1
+#define CHAR_LIMIT 250
 
 #include <stdio.h>
 #include <stdio.h>

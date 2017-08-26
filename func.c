@@ -11,7 +11,7 @@
 void output(char *key, int weight, char* outputfile) {
     FILE *f1 = fopen(outputfile, "a");
     if (f1!=NULL){
-        if (weight<0) {
+        if (weight == UNAVAILABLE) {
             printf("%s\n\n", key);
         }
         fprintf(f1, "key: %s   Weight: %d\n", key, weight);
@@ -31,8 +31,8 @@ void traverse(struct node* pNode, char* buffer, int depth, char* outputfile) {
      * If no more left branches , then save the character
      */
     buffer[depth] = pNode->character;
-    if (pNode->last_character == 1 /* pNode end of string flag is true*/) {
-        buffer[depth+1] = '\0' ;
+    if (pNode->last_character == TRUE /* pNode end of string flag is true*/) {
+        buffer[depth+1] = STRING_END ;
         printf( "%s\n" , buffer) ;
         output(buffer, pNode->weight, outputfile);
     }
@@ -55,9 +55,9 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix){
      * pNode will point there if we reached the '\0' symbol,
      * if prefix does not exist , then pNode should be NULL
      */
-    char buffer[15]; int i=0, comparisons = 0;
+    char buffer[CHAR_LIMIT]; int index=0, comparisons = 0;
     char *temp = prefix;
-    while(*temp != '\0' && pNode != NULL){
+    while(*temp != STRING_END && pNode != NULL){
         /**
          * Find tree position for prefix
          */
@@ -76,13 +76,13 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix){
         }
         // equal branch
         if(*temp == pNode->character){
-            if (pNode->equal && *(temp+1) != '\0') {
+            if (pNode->equal && *(temp+1) != STRING_END) {
                 pNode = pNode->equal;
-                buffer[i++] = *temp;
+                buffer[index++] = *temp;
                 temp++;
                 continue;
             }
-            buffer[i++] = *temp;
+            buffer[index++] = *temp;
             temp++;
         }
     }
@@ -101,8 +101,8 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix){
          * if prefix is a key
          */
         
-        if (pNode->last_character == 1) {
-            buffer[strlen(prefix)] = '\0';
+        if (pNode->last_character == TRUE) {
+            buffer[strlen(prefix)] = STRING_END;
             printf( "%s\n", buffer);
             output(buffer, pNode->weight, outpulfile);
             
@@ -114,7 +114,7 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix){
         traverse (pNode->equal, buffer , (int)strlen(prefix), outpulfile) ;
     }
     else {
-        output("NOTFOUND", -1, outpulfile); //make typedef here NOTFOUND
+        output("NOTFOUND", UNAVAILABLE, outpulfile); //make typedef here NOTFOUND
     }
 }
 
@@ -129,7 +129,7 @@ struct node *insert(struct node* pNode, char* word, int weight) {
         pNode = newnode();
         pNode->left = pNode->right = pNode->equal = NULL;
         pNode->character = *word;
-        pNode->last_character = 0;
+        pNode->last_character = FALSE;
     }
     
     if (*word < pNode->character) {    //if current letter less then go left
@@ -138,8 +138,8 @@ struct node *insert(struct node* pNode, char* word, int weight) {
     
     else if (*word == pNode->character) { //if it equals to node
         
-        if (*(word+1) == '\0') {                //check if its last letter to insert
-            pNode->last_character = 1;         //fill in weight and flag
+        if (*(word+1) == STRING_END) {                //check if its last letter to insert
+            pNode->last_character = TRUE;         //fill in weight and flag
             pNode->weight = weight;
         }
         
