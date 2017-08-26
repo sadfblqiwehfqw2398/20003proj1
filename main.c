@@ -27,34 +27,34 @@ void output(char *key, int weight, char* outputfile) {
 /**
  * Tree traversal from a given node
  */
-void traverse(struct node* pNode, char* buffer, int depth, char* outputfile, char *prefix) {
+void traverse(struct node* pNode, char* buffer, int depth, char* outputfile) {
     if (pNode == NULL) return;
     /**
      * Go first to the left most branch */
-    traverse (pNode->left, buffer, depth, outputfile, prefix) ;
+    traverse (pNode->left, buffer, depth, outputfile) ;
     /**
      * If no more left branches , then save the character
      */
-       buffer[depth] = pNode->character;
+    buffer[depth] = pNode->character;
     if (pNode->last_character == 1 /* pNode end of string flag is true*/) {
-            buffer[depth+1] = '\0' ;
-            printf( "%s\n" , buffer) ;
-            output(buffer, pNode->weight, outputfile);
+        buffer[depth+1] = '\0' ;
+        printf( "%s\n" , buffer) ;
+        output(buffer, pNode->weight, outputfile);
     }
     
     /**
      * and go to the equal branch, advancing
      * to the next character of the key
      */
-    traverse (pNode->equal , buffer , depth + 1, outputfile, prefix) ;
+    traverse (pNode->equal , buffer , depth + 1, outputfile) ;
     /**
      * Finally go to the branches that contain
      * characters greater than the current one in the buffer
      */
-    traverse (pNode->right, buffer, depth, outputfile, prefix) ;
+    traverse (pNode->right, buffer, depth, outputfile) ;
 }
 
-void find_and_traverse( struct node* pNode, char* outpulfile, char* prefix ){
+void find_and_traverse( struct node* pNode, char* outpulfile, char *prefix){
     /**
      * Find the node in the tree that represents the prefix
      * pNode will point there if we reached the '\0' symbol,
@@ -62,7 +62,6 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char* prefix ){
      */
     char buffer[15]; int i=0, comparisons = 0;
     char *temp = prefix;
-    struct node *tempPtr;
     while(*temp != '\0' && pNode != NULL){
         /**
          * Find tree position for prefix
@@ -117,7 +116,7 @@ void find_and_traverse( struct node* pNode, char* outpulfile, char* prefix ){
         /**
          * print all the keys that contain the prefix
          */
-        traverse (pNode->equal, buffer , strlen(prefix), outpulfile, prefix) ;
+        traverse (pNode->equal, buffer , (int)strlen(prefix), outpulfile) ;
     }
     else {
         output("NOTFOUND", -1, outpulfile); //make typedef here NOTFOUND
