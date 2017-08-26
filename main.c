@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-//#define END_OF_WORD '\0'
+
 
 struct node {
     char character;
