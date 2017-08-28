@@ -10,12 +10,16 @@
 
 void output(char *key, int weight, char* outputfile) {
     FILE *f1 = fopen(outputfile, "a");
-    if (f1!=NULL){
+    if (f1!=NULL) {
         if (weight == UNAVAILABLE) {
-            printf("%s\n\n", key);
+            printf("%s\n", key);
+            fprintf(f1, "%s\n", key);
+            fclose (f1);
         }
-        fprintf(f1, "key: %s   Weight: %d\n", key, weight);
-        fclose (f1);
+        else {
+            fprintf(f1, "key: %s   Weight: %d\n", key, weight);
+            fclose (f1);
+        }
     }
 }
 
