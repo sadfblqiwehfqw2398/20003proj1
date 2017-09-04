@@ -1,8 +1,9 @@
+//  Algorithms and Data Structures
+//  Assignment 1, 2017 Semester 2
 //
 //  func.h
-//  20003proj1
 //
-//  Created by Har on 26/8/17.
+//  Created by Hardaya Singh on 26/8/17.
 //  Student ID: 692319
 //
 
