@@ -4,7 +4,6 @@
 //  sorting.c
 //
 //  Created by Hardaya Singh on 26/8/17.
-//  Student ID: 692319
 //
 
 #include "func.h"
